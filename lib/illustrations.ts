@@ -87,5 +87,58 @@ const text: Illustration = [
   { color: PALETTE.pink, draw: (c) => { c.beginPath(); c.arc(11, 67.5, 9, 0, Math.PI * 2); c.fill(); } },
 ];
 
-export const illustrations = { cake, bars, path, text } as const;
+/**
+ * Browser Recall: the history icon from the app, as nodes on the same panel as the other cards. A
+ * counter-clockwise arrow circles a clock; the ring runs from ink on the left through red to pink on
+ * the right, echoing the icon's dark-to-red glow. Strokes are at least two nodes thick.
+ */
+const clockRed = "#C81D4E";
+const ring = (c: CanvasRenderingContext2D) => {
+  c.strokeStyle = "#000";
+  c.lineWidth = 11;
+  c.lineCap = "round";
+  c.beginPath(); // open at 9 o'clock, where the arrowhead points down
+  c.arc(50, 40, 30, (200 * Math.PI) / 180, (520 * Math.PI) / 180);
+  c.stroke();
+};
+const fromX = (minX: number, draw: (c: CanvasRenderingContext2D) => void) => (c: CanvasRenderingContext2D) => {
+  c.save();
+  c.beginPath();
+  c.rect(minX, 0, 100, 80);
+  c.clip();
+  draw(c);
+  c.restore();
+};
+const clock: Illustration = [
+  { color: INK, draw: ring },
+  { color: clockRed, draw: fromX(46, ring) },
+  { color: PALETTE.pink, draw: fromX(66, ring) },
+  {
+    color: INK,
+    draw: (c) => {
+      c.strokeStyle = "#000";
+      c.lineWidth = 9;
+      c.lineCap = "round";
+      c.lineJoin = "round";
+      c.beginPath(); // hands
+      c.moveTo(50, 25);
+      c.lineTo(50, 40);
+      c.lineTo(62, 47);
+      c.stroke();
+    },
+  },
+  {
+    color: PALETTE.pink,
+    draw: (c) => {
+      c.beginPath(); // arrowhead
+      c.moveTo(9.6, 25.3);
+      c.lineTo(34, 34.2);
+      c.lineTo(16.7, 43.8);
+      c.closePath();
+      c.fill();
+    },
+  },
+];
+
+export const illustrations = { cake, bars, path, text, clock } as const;
 export type IllustrationName = keyof typeof illustrations;

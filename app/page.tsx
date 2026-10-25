@@ -23,8 +23,9 @@ import {
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 
-// One flat color per project tile; ink text reads on all four.
+// One flat color per project tile; ink text reads on all five.
 const tiles = [
+  { bg: PALETTE.orange, corner: "tile-tr tile-wide" },
   { bg: PALETTE.pink, corner: "tile-tl" },
   { bg: PALETTE.cyan, corner: "tile-br" },
   { bg: PALETTE.yellow, corner: "tile-bl" },
@@ -163,17 +164,20 @@ export default function Home() {
                   <span className="md:hidden">{p.short}</span>
                   <span className="hidden md:inline">{p.sentence}</span>
                 </p>
+                {p.stack && <p className="mt-2 hidden text-sm font-medium opacity-70 md:block">{p.stack}</p>}
                 <p className="mt-1 flex flex-wrap items-center gap-x-5 md:mt-2 md:gap-x-6">
                   <a href={p.primary.href} className="link-ink inline-flex min-h-11 items-center font-semibold" {...ext}>
                     <span className="md:hidden">{p.primary.short}</span>
                     <span className="hidden md:inline">{p.primary.label}</span>
                     <span aria-hidden="true" className="ml-1">↗</span>
                   </a>
-                  <a href={p.code} className="link-ink inline-flex min-h-11 items-center font-semibold" {...ext}>
-                    <span className="md:hidden">Code</span>
-                    <span className="hidden md:inline">GitHub</span>
-                    <span aria-hidden="true" className="ml-1">↗</span>
-                  </a>
+                  {p.code && (
+                    <a href={p.code} className="link-ink inline-flex min-h-11 items-center font-semibold" {...ext}>
+                      <span className="md:hidden">Code</span>
+                      <span className="hidden md:inline">GitHub</span>
+                      <span aria-hidden="true" className="ml-1">↗</span>
+                    </a>
+                  )}
                 </p>
               </div>
             </li>

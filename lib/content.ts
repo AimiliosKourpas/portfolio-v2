@@ -55,9 +55,12 @@ export type Project = {
   /** One short line for mobile cards; the full sentence is used from the md breakpoint up. */
   short: string;
   art: IllustrationName;
+  /** Optional tech line, shown from the md breakpoint up. */
+  stack?: string;
   /** `short` is the compact mobile link label. */
   primary: { label: string; short: string; href: string };
-  code: string;
+  /** Public repository, when there is one. */
+  code?: string;
 };
 
 // Years verified via the GitHub API on 2026-10-18:
@@ -66,7 +69,23 @@ export type Project = {
 //  - pathfinding-visualizer: created 2025-06-08
 //  - GreekBERT thesis: GitHub repo was only uploaded 2025-05-02, so the year comes
 //    from the University of Piraeus library record (issued 2024-07, defended 2024-07-16).
+//  - browser-recall: first commit 2026-10-03; public repo, listed on the Chrome Web Store
 export const projects: Project[] = [
+  {
+    title: "Browser Recall",
+    year: "2026",
+    sentence:
+      "A privacy-first Chrome extension that helps users quickly find previously visited websites through browser history, saved pages, and full-text search. All data is stored locally, with no accounts or servers required.",
+    short: "Find your browsing history, instantly.",
+    art: "clock",
+    stack: "TypeScript, Preact, SQLite FTS5, WXT",
+    primary: {
+      label: "View Extension",
+      short: "Extension",
+      href: "https://chromewebstore.google.com/detail/kmoklnepkgfoofhohcadkonpendolodn",
+    },
+    code: "https://github.com/AimiliosKourpas/browser-recall",
+  },
   {
     title: "BirthDiary",
     year: "2025",
